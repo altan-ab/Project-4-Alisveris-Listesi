@@ -7,13 +7,14 @@ export default function App() {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (item.trim()) {
-      setItems([...items, item])
+      const newItem = { id: crypto.randomUUID(), name: item }
+      setItems([...items, newItem])
       setItem('')
     }
   }
 
   const handleDelete = (itemToDelete) => {
-    setItems(items.filter((i) => i !== itemToDelete))
+    setItems(items.filter((i) => i.id !== itemToDelete))
   }
 
   return (
@@ -31,10 +32,10 @@ export default function App() {
           <button type="submit">Add</button>
         </form>
         <ul className="list-item">
-          {items.map((item, index) => (
-            <li key={index} className="item">
-              {item}
-              <button onClick={() => handleDelete(item)} className="button">
+          {items.map((item) => (
+            <li key={item.id} className="item">
+              {item.name}
+              <button onClick={() => handleDelete(item.id)} className="button">
                 X
               </button>
             </li>
